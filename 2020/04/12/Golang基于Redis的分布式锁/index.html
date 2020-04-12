@@ -29,7 +29,7 @@
 <meta property="og:description" content="分布式锁1、为了避免单持有锁的进程奔溃而无法释放锁，所以必须能够为锁设定过期时间自动释放锁资源 2、使用TTL检查锁是否成功的被设置过期时间，如果返回-1（未被设置）的话，使用Expire为其设定过期时间 3、在释放锁的时候需要使用Watch命令，确保监测的值在事务执行时时未被改变，如果其他进程修改了锁，会触发事务异常，然后重新执行Watch。  分享一个我写的Redis封装类，仅实现了连接和锁">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-04-12T12:38:39.000Z">
-<meta property="article:modified_time" content="2020-04-12T13:00:00.419Z">
+<meta property="article:modified_time" content="2020-04-12T13:01:59.168Z">
 <meta property="article:author" content="guaik">
 <meta property="article:tag" content="golang">
 <meta property="article:tag" content="redis">
@@ -79,14 +79,14 @@
             <li class="waves-block waves-effect">
               <a href="/archives"  >
                 <i class="icon icon-lg icon-archives"></i>
-                Archives
+                档案
               </a>
             </li>
         
             <li class="waves-block waves-effect">
               <a href="/tags"  >
                 <i class="icon icon-lg icon-tags"></i>
-                Tags
+                标签
               </a>
             </li>
         
@@ -176,7 +176,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#分布式锁"><span class="post-toc-number">1.</span> <span class="post-toc-text">分布式锁</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分布式锁"><span class="post-toc-number">1.</span> <span class="post-toc-text">分布式锁</span></a></li></ol>
         </nav>
     </aside>
 
@@ -202,7 +202,7 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h3 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h3><p>1、为了避免单持有锁的进程奔溃而无法释放锁，所以必须能够为锁设定过期时间自动释放锁资源</p>
+            <h2 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h2><p>1、为了避免单持有锁的进程奔溃而无法释放锁，所以必须能够为锁设定过期时间自动释放锁资源</p>
 <p>2、使用TTL检查锁是否成功的被设置过期时间，如果返回-1（未被设置）的话，使用Expire为其设定过期时间</p>
 <p>3、在释放锁的时候需要使用Watch命令，确保监测的值在事务执行时时未被改变，如果其他进程修改了锁，会触发事务异常，然后重新执行Watch。</p>
 <hr>
@@ -216,7 +216,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2020-04-12T13:00:00.419Z" itemprop="dateUpdated">2020-04-12 21:00:00</time>
+    Last updated: <time datetime="2020-04-12T13:01:59.168Z" itemprop="dateUpdated">2020-04-12 21:01:59</time>
 </span><br>
 
 
@@ -305,7 +305,7 @@
 <section class="comments" id="comments">
     <div id="disqus_thread"></div>
     <script>
-    var disqus_shortname = 'guaik';
+    var disqus_shortname = 'blog-5nxjs4mlf4';
     lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
     </script>
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
