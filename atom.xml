@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>怪客的博客</title>
-  <icon>https://www.gravatar.com/avatar/03135de1152319a814e6170a53b33251</icon>
+  
   
   <link href="/atom.xml" rel="self"/>
   
@@ -10,8 +10,8 @@
   <id>http://blog.guaik.org/</id>
   
   <author>
-    <name>GuaiK</name>
-    <email>luting.gu@gmail.com</email>
+    <name>guaik</name>
+    
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
