@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Golang基于Redis的分布式锁 | 怪客的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="golang redis 分布式锁">
+    <meta name="description" content="分布式锁1、为了避免单持有锁的进程奔溃而无法释放锁，所以必须能够为锁设定过期时间自动释放锁资源 2、使用TTL检查锁是否成功的被设置过期时间，如果返回-1（未被设置）的话，使用Expire为其设定过期时间 3、在释放锁的时候需要使用Watch命令，确保监测的值在事务执行时时未被改变，如果其他进程修改了锁，会触发事务异常，然后重新执行Watch。  分享一个我写的Redis封装类，仅实现了连接和锁">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Golang基于Redis的分布式锁">
+<meta property="og:url" content="https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/index.html">
+<meta property="og:site_name" content="怪客的博客">
+<meta property="og:description" content="分布式锁1、为了避免单持有锁的进程奔溃而无法释放锁，所以必须能够为锁设定过期时间自动释放锁资源 2、使用TTL检查锁是否成功的被设置过期时间，如果返回-1（未被设置）的话，使用Expire为其设定过期时间 3、在释放锁的时候需要使用Watch命令，确保监测的值在事务执行时时未被改变，如果其他进程修改了锁，会触发事务异常，然后重新执行Watch。  分享一个我写的Redis封装类，仅实现了连接和锁">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-12T12:38:39.000Z">
+<meta property="article:modified_time" content="2020-04-12T12:45:12.540Z">
+<meta property="article:author" content="guaik">
+<meta property="article:tag" content="golang redis 分布式锁">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="怪客的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">guaik</h5>
+          <a href="mailto:luting.gu@gmail.com" title="luting.gu@gmail.com" class="mail">luting.gu@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/guaik" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.weibo.com/guaiker" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Golang基于Redis的分布式锁</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Golang基于Redis的分布式锁</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-04-12T12:38:39.000Z" itemprop="datePublished" class="page-time">
+  2020-04-12
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#分布式锁"><span class="post-toc-number">1.</span> <span class="post-toc-text">分布式锁</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Golang基于Redis的分布式锁"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Golang基于Redis的分布式锁</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-04-12 20:38:39" datetime="2020-04-12T12:38:39.000Z"  itemprop="datePublished">2020-04-12</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h3 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h3><p>1、为了避免单持有锁的进程奔溃而无法释放锁，所以必须能够为锁设定过期时间自动释放锁资源</p>
+<p>2、使用TTL检查锁是否成功的被设置过期时间，如果返回-1（未被设置）的话，使用Expire为其设定过期时间</p>
+<p>3、在释放锁的时候需要使用Watch命令，确保监测的值在事务执行时时未被改变，如果其他进程修改了锁，会触发事务异常，然后重新执行Watch。</p>
+<hr>
+<p>分享一个我写的Redis封装类，仅实现了连接和锁</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> dao</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"time"</span></span><br><span class="line"></span><br><span class="line">    <span class="string">"github.com/go-redis/redis/v7"</span></span><br><span class="line">    uuid <span class="string">"github.com/satori/go.uuid"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Rds <span class="keyword">struct</span> &#123;</span><br><span class="line">    Client         *redis.Client</span><br><span class="line">    AcquireTimeout <span class="keyword">int32</span></span><br><span class="line">    LockTimeout    <span class="keyword">int32</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewRds</span><span class="params">(host, passwd <span class="keyword">string</span>, db <span class="keyword">int</span>)</span> <span class="params">(rds *Rds, err error)</span></span> &#123;</span><br><span class="line">    rdsOpt := &amp;redis.Options&#123;</span><br><span class="line">        Addr:     host,</span><br><span class="line">        Password: passwd,</span><br><span class="line">        DB:       db,</span><br><span class="line">    &#125;</span><br><span class="line">    client := redis.NewClient(rdsOpt)</span><br><span class="line">    _, err = client.Ping().Result()</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    rds = &amp;Rds&#123;Client: client, AcquireTimeout: <span class="number">10</span>, LockTimeout: <span class="number">10</span>&#125;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r *Rds)</span> <span class="title">AcquireLockWithTimeout</span><span class="params">(key <span class="keyword">string</span>)</span> <span class="params">(identifier <span class="keyword">string</span>, b <span class="keyword">bool</span>)</span></span> &#123;</span><br><span class="line">    identifier = uuid.NewV4().String()</span><br><span class="line">    lockname := <span class="string">"lock:"</span> + key</span><br><span class="line">    end := time.Now().Add(time.Second * time.Duration(r.AcquireTimeout))</span><br><span class="line">    <span class="keyword">for</span> time.Now().Before(end) &#123;</span><br><span class="line">        <span class="keyword">if</span> r.Client.SetNX(lockname, identifier, time.Second*time.Duration(r.LockTimeout)).Val() &#123;</span><br><span class="line">            <span class="comment">// 如果key不存在，并成功设置了key</span></span><br><span class="line">            b = <span class="literal">true</span></span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> r.Client.TTL(lockname).Val() == <span class="number">-1</span> &#123;</span><br><span class="line">            <span class="comment">// 如果key存在，但是没有剩余时间</span></span><br><span class="line">            r.Client.Expire(lockname, time.Second*time.Duration(r.LockTimeout))</span><br><span class="line">        &#125;</span><br><span class="line">        time.Sleep(time.Microsecond)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r *Rds)</span> <span class="title">ReleaseLock</span><span class="params">(key, identifier <span class="keyword">string</span>)</span> <span class="params">(b <span class="keyword">bool</span>)</span></span> &#123;</span><br><span class="line">    lockname := <span class="string">"lock:"</span> + key</span><br><span class="line">    txf := <span class="function"><span class="keyword">func</span><span class="params">(tx *redis.Tx)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">        v, err := tx.Get(lockname).Result()</span><br><span class="line">        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> err</span><br><span class="line">        &#125;</span><br><span class="line">        _, err = tx.Pipelined(<span class="function"><span class="keyword">func</span><span class="params">(pipe redis.Pipeliner)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">            <span class="keyword">if</span> v == identifier &#123;</span><br><span class="line">                pipe.Del(lockname)</span><br><span class="line">                b = <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">        err := r.Client.Watch(txf, lockname)</span><br><span class="line">        <span class="keyword">if</span> err == <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> err == redis.TxFailedErr &#123;</span><br><span class="line">            glog.Error(err)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-04-12T12:45:12.540Z" itemprop="dateUpdated">2020-04-12 20:45:12</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" target="_blank" rel="external">https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://guaik.github.io">
+            <img src="/img/avatar.jpg" alt="guaik">
+            guaik
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang-redis-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" rel="tag">golang redis 分布式锁</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=《Golang基于Redis的分布式锁》 — 怪客的博客&pic=https://guaik.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=《Golang基于Redis的分布式锁》 — 怪客的博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Golang基于Redis的分布式锁》 — 怪客的博客&url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&via=https://guaik.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'guaik';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license noopener" href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>guaik &copy; 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=《Golang基于Redis的分布式锁》 — 怪客的博客&pic=https://guaik.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=《Golang基于Redis的分布式锁》 — 怪客的博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Golang基于Redis的分布式锁》 — 怪客的博客&url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&via=https://guaik.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAAD+0lEQVR42u3aS47iQBAFQN//0j3bkaax38ssupEmvEKA7aowUpKf64qPr7+O+3deffrv1e7PevWd+3fuzzp24MCBAweOeKv3C8rfbxeaLP3VXfJHdb9HHDhw4MBxliMPh8mneVBscfP1JCvEgQMHDhyfwJGkarNkLHl9HzjbB4YDBw4cOD6HIwmE7VmzlDIJxjhw4MCB4+c5ktu3KVkOtA/AbXHzQK0UBw4cOHCkke5qg+7nv37LfAcOHDhw4CiTpTwQ7tOwWbLXFigfVoUDBw4cONYceUCaAW2Kg5u21qwQiQMHDhw4TnHsN58XE/Mrb77ZFh+vs78FHDhw4PjvOfIkqm0ObVpE7YZPlThx4MCBA8eGY1/CS248GylIRijabz48Nhw4cODAseZIkrfZp3nAzq/WtppmZUccOHDgwLHhSJKuNqDOCo5JIG8fT70vHDhw4MCx5jiV6nwFx2yIIU/e2h0VvxQcOHDgwBFztGlYm9ptmGbJWJvUfdN2woEDBw4cC448DWs3cKqllI84bO6LAwcOHDhOceRjanlYzcuOm9C+GaF4CLE4cODAgeMNHLMWThL22oQqv+am1fQQaHHgwIEDR1dbu/IwOVtKkU3GyWGy+dXQBg4cOHDgGHG0adI+jG2GG/IRitn6ceDAgQPHnmNWBNy0gvJBhPzB5MXBInnDgQMHDhwLjnyMYJaS5clVHsjPvn7IaHHgwIEDR3yvfNQgaRTN2kuzQHgqkOPAgQMHjndw5BvYh+HZlVuU4fpx4MCBA8chjjbUDctt8RU2zafVQAYOHDhw4Dgz21ajzL6fJHszps06D/xGcODAgQNH3MffjKntCfKNza4W/S3AgQMHDhwjjvuTN7pnRxMSoDxVGw7J4cCBAweOW45NMpYU+4pnMirktdAPjwcHDhw4cBziyEtmm0G0PIjOQn4e5qP5Dhw4cODAMc+PisGFvCzYjsflLaW8jZSPYuDAgQMHjlMcRT9q1OZpC39tCbJ9DA/3woEDBw4chzjy5k2y1bZUt2lubdb8zZVx4MCBA8cbONpNJuW8GVPe4tqs5yHQ4sCBAweOEUdbYpsV+zblxX2pMQrYOHDgwIFjzdEmVEma1Aa5tgSZHCsmHDhw4MCx4Njfpi3h5U2g9gFsBiCGTwAHDhw4cCyOzYDCjDJP9pKA2jbAcODAgQPHhqO98YwmbzK1gXkTaHHgwIEDx/s4NoEqKQ62ET5vTc3+O7w8FwcOHDhw/DjHvtXUXvlsAfHh7jhw4MCB41c52pGINhnL08VZa+3lfAcOHDhw4FhztCnTDK4da0iYNoMRq1opDhw4cOBYDzTMErM8GSsSrVEiNxuMwIEDBw4cMccf7X3Yu5tMw0wAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
