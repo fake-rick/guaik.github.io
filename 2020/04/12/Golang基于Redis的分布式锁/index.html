@@ -24,7 +24,7 @@
     <meta name="description" content="分布式锁1、为了避免单持有锁的进程奔溃而无法释放锁，所以必须能够为锁设定过期时间自动释放锁资源 2、使用TTL检查锁是否成功的被设置过期时间，如果返回-1（未被设置）的话，使用Expire为其设定过期时间 3、在释放锁的时候需要使用Watch命令，确保监测的值在事务执行时时未被改变，如果其他进程修改了锁，会触发事务异常，然后重新执行Watch。  分享一个我写的Redis封装类，仅实现了连接和锁">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Golang基于Redis的分布式锁">
-<meta property="og:url" content="https://blog.guaik.org/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/index.html">
+<meta property="og:url" content="https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/index.html">
 <meta property="og:site_name" content="怪客的博客">
 <meta property="og:description" content="分布式锁1、为了避免单持有锁的进程奔溃而无法释放锁，所以必须能够为锁设定过期时间自动释放锁资源 2、使用TTL检查锁是否成功的被设置过期时间，如果返回-1（未被设置）的话，使用Expire为其设定过期时间 3、在释放锁的时候需要使用Watch命令，确保监测的值在事务执行时时未被改变，如果其他进程修改了锁，会触发事务异常，然后重新执行Watch。  分享一个我写的Redis封装类，仅实现了连接和锁">
 <meta property="og:locale" content="en_US">
@@ -221,12 +221,12 @@
 
 
         
-        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" target="_blank" rel="external">https://blog.guaik.org/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</a>
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" target="_blank" rel="external">https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</a>
         
     </div>
     
     <footer>
-        <a href="https://blog.guaik.org">
+        <a href="https://guaik.github.io">
             <img src="/img/avatar.jpg" alt="guaik">
             guaik
         </a>
@@ -252,7 +252,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.guaik.org/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=《Golang基于Redis的分布式锁》 — 怪客的博客&pic=https://blog.guaik.org/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=《Golang基于Redis的分布式锁》 — 怪客的博客&pic=https://guaik.github.io/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -262,22 +262,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.guaik.org/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=《Golang基于Redis的分布式锁》 — 怪客的博客&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=《Golang基于Redis的分布式锁》 — 怪客的博客&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.guaik.org/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Golang基于Redis的分布式锁》 — 怪客的博客&url=https://blog.guaik.org/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&via=https://blog.guaik.org" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Golang基于Redis的分布式锁》 — 怪客的博客&url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&via=https://guaik.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.guaik.org/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -305,7 +305,7 @@
 <section class="comments" id="comments">
     <div id="disqus_thread"></div>
     <script>
-    var disqus_shortname = 'blog-5nxjs4mlf4';
+    var disqus_shortname = 'guaik-blog';
     lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
     </script>
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
@@ -400,7 +400,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.guaik.org/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=《Golang基于Redis的分布式锁》 — 怪客的博客&pic=https://blog.guaik.org/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=《Golang基于Redis的分布式锁》 — 怪客的博客&pic=https://guaik.github.io/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -410,22 +410,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.guaik.org/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=《Golang基于Redis的分布式锁》 — 怪客的博客&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=《Golang基于Redis的分布式锁》 — 怪客的博客&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.guaik.org/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Golang基于Redis的分布式锁》 — 怪客的博客&url=https://blog.guaik.org/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&via=https://blog.guaik.org" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Golang基于Redis的分布式锁》 — 怪客的博客&url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&via=https://guaik.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.guaik.org/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -436,7 +436,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAAD4klEQVR42u3aUU7kQAwE0Ln/peEAkEnZ1QGE3nyhISTdLyvVuu3XK/58fPkkV77/5urn5Cn5c19PfHDgwIEDx3Cr77eUX7nb/PRu+RrerxwHDhw4cJzluEqcJLSSK3PoXczniDd7x4EDBw4cf4AjX9YU9OoOyYZx4MCBA8f/43jiyG/6Wxw4cODA8VscyZFfEqh54O0OIvOVP35WigMHDhw4NkkXbenv//zIfAcOHDhw4AjaObvQbYib0m5aOt7sDgcOHDhw1Bz59qYDB6f48rZT/tubK3HgwIEDR8GRDMDlw827+EyOFKdRmhw+RumNAwcOHDiKpMtbTflYW/LNjmAX4cuxBhw4cODAMeTYPTIPsDzO+7GGXdsMBw4cOHCc4hiYxRtrBg52Eb4L8pt/Fzhw4MCBY8WRF2bTcmsaw03E5vePVoUDBw4cOI5y5I2i3QBBM3aQR3XVHsOBAwcOHAVHM0awawU1AdwXkzff4MCBAweOmuNUATZ9cBLtu6fnIxdRIYcDBw4cOIbXJAvKC7az4wh9WE5LUxw4cODAcYojb88km2kO+/rXsDu+vByVw4EDBw4cK4687Nk1gXaJlh//NQ0tHDhw4MDxBMduvGA3YDcdd0jImoGMbyY7cODAgQNHzZGPL0+HCZJg3g1hV7OB/VkpDhw4cOA4Gpy78qlpLPUvJi9QceDAgQNHw5GPGjwdlrsW1y7IxxGLAwcOHDjq2bD8r5JhiLP3bwYpbhpXOHDgwIHjEMduKCEp3poBu+k1u9bUTdsJBw4cOHAMOfKDv2lw5q2sadhPX944pHHgwIEDxyGO6QhaPgyRPyUvL6dxnj8LBw4cOHA0HNORgmmlkze38kPG3SuM4hwHDhw4cNQcu8jMB+Ca1tS0PKsIcODAgQPHIY485PIDxN3fJhE+3fC4uYUDBw4cOGqOU0XX7kCwGXqYQkybajhw4MCBo+E4+8hppCV3mI4p5CMROHDgwIHjLMe0MOsbVPkd8u1NS7jL1eLAgQMHjkMcyaFe3xaaBnmzwh0TDhw4cOA4xTE9ImyidHdama+zWhUOHDhw4Di0qml7aTqIMBgdqAN4ev+bQg4HDhw4cKz6LPknj+ScON9G8wIGoww4cODAgaPgmD74bKnWDE/kDbPdoSQOHDhw4Gg4kpjMD+/ykG6aWP39ceDAgQPH0xz9YV9e7O0CvjlwHOwOBw4cOHD8OMeuxGoCctd8WrbBcODAgQPHj3M0DaTdQFuCnq/zwf934MCBAweO4eHgdERgeTyXLz1Y27gIxIEDBw4cNcf0KC3ZxnTzuwKyKfCaI0scOHDgwHFx5SdkoRVHFrYFAwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAAD+0lEQVR42u3aS47iQBAFQN//0j3bkaax38ssupEmvEKA7aowUpKf64qPr7+O+3deffrv1e7PevWd+3fuzzp24MCBAweOeKv3C8rfbxeaLP3VXfJHdb9HHDhw4MBxliMPh8mneVBscfP1JCvEgQMHDhyfwJGkarNkLHl9HzjbB4YDBw4cOD6HIwmE7VmzlDIJxjhw4MCB4+c5ktu3KVkOtA/AbXHzQK0UBw4cOHCkke5qg+7nv37LfAcOHDhw4CiTpTwQ7tOwWbLXFigfVoUDBw4cONYceUCaAW2Kg5u21qwQiQMHDhw4TnHsN58XE/Mrb77ZFh+vs78FHDhw4PjvOfIkqm0ObVpE7YZPlThx4MCBA8eGY1/CS248GylIRijabz48Nhw4cODAseZIkrfZp3nAzq/WtppmZUccOHDgwLHhSJKuNqDOCo5JIG8fT70vHDhw4MCx5jiV6nwFx2yIIU/e2h0VvxQcOHDgwBFztGlYm9ptmGbJWJvUfdN2woEDBw4cC448DWs3cKqllI84bO6LAwcOHDhOceRjanlYzcuOm9C+GaF4CLE4cODAgeMNHLMWThL22oQqv+am1fQQaHHgwIEDR1dbu/IwOVtKkU3GyWGy+dXQBg4cOHDgGHG0adI+jG2GG/IRitn6ceDAgQPHnmNWBNy0gvJBhPzB5MXBInnDgQMHDhwLjnyMYJaS5clVHsjPvn7IaHHgwIEDR3yvfNQgaRTN2kuzQHgqkOPAgQMHjndw5BvYh+HZlVuU4fpx4MCBA8chjjbUDctt8RU2zafVQAYOHDhw4Dgz21ajzL6fJHszps06D/xGcODAgQNH3MffjKntCfKNza4W/S3AgQMHDhwjjvuTN7pnRxMSoDxVGw7J4cCBAweOW45NMpYU+4pnMirktdAPjwcHDhw4cBziyEtmm0G0PIjOQn4e5qP5Dhw4cODAMc+PisGFvCzYjsflLaW8jZSPYuDAgQMHjlMcRT9q1OZpC39tCbJ9DA/3woEDBw4chzjy5k2y1bZUt2lubdb8zZVx4MCBA8cbONpNJuW8GVPe4tqs5yHQ4sCBAweOEUdbYpsV+zblxX2pMQrYOHDgwIFjzdEmVEma1Aa5tgSZHCsmHDhw4MCx4Njfpi3h5U2g9gFsBiCGTwAHDhw4cCyOzYDCjDJP9pKA2jbAcODAgQPHhqO98YwmbzK1gXkTaHHgwIEDx/s4NoEqKQ62ET5vTc3+O7w8FwcOHDhw/DjHvtXUXvlsAfHh7jhw4MCB41c52pGINhnL08VZa+3lfAcOHDhw4FhztCnTDK4da0iYNoMRq1opDhw4cOBYDzTMErM8GSsSrVEiNxuMwIEDBw4cMccf7X3Yu5tMw0wAAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 

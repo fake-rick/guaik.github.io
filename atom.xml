@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="https://blog.guaik.org/"/>
+  <link href="https://guaik.github.io/"/>
   <updated>2020-04-12T13:01:59.168Z</updated>
-  <id>https://blog.guaik.org/</id>
+  <id>https://guaik.github.io/</id>
   
   <author>
     <name>guaik</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Golang基于Redis的分布式锁</title>
-    <link href="https://blog.guaik.org/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/"/>
-    <id>https://blog.guaik.org/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</id>
+    <link href="https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/"/>
+    <id>https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</id>
     <published>2020-04-12T12:38:39.000Z</published>
     <updated>2020-04-12T13:01:59.168Z</updated>
     
@@ -36,14 +36,14 @@
     </summary>
     
     
-      <category term="分布式" scheme="https://blog.guaik.org/categories/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+      <category term="分布式" scheme="https://guaik.github.io/categories/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
     
-      <category term="golang" scheme="https://blog.guaik.org/tags/golang/"/>
+      <category term="golang" scheme="https://guaik.github.io/tags/golang/"/>
     
-      <category term="redis" scheme="https://blog.guaik.org/tags/redis/"/>
+      <category term="redis" scheme="https://guaik.github.io/tags/redis/"/>
     
-      <category term="分布式锁" scheme="https://blog.guaik.org/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/"/>
+      <category term="分布式锁" scheme="https://guaik.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/"/>
     
   </entry>
   
