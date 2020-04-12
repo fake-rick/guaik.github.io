@@ -14,7 +14,7 @@
     
     
     
-    <title>Golang基于Redis的分布式锁 | 怪客的Blog | 分享一些黑科技</title>
+    <title>基于Redis的分布式锁 | 怪客的Blog | 分享一些黑科技</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -23,13 +23,13 @@
     <meta name="keywords" content="golang,redis,分布式锁">
     <meta name="description" content="分布式锁1、为了避免单持有锁的进程奔溃而无法释放锁，所以必须能够为锁设定过期时间自动释放锁资源 2、使用TTL检查锁是否成功的被设置过期时间，如果返回-1（未被设置）的话，使用Expire为其设定过期时间 3、在释放锁的时候需要使用Watch命令，确保监测的值在事务执行时时未被改变，如果其他进程修改了锁，会触发事务异常，然后重新执行Watch。  分享一个我写的Redis封装类，仅实现了连接和锁">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Golang基于Redis的分布式锁">
-<meta property="og:url" content="https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/index.html">
+<meta property="og:title" content="基于Redis的分布式锁">
+<meta property="og:url" content="https://guaik.github.io/2020/04/12/%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/index.html">
 <meta property="og:site_name" content="怪客的Blog">
 <meta property="og:description" content="分布式锁1、为了避免单持有锁的进程奔溃而无法释放锁，所以必须能够为锁设定过期时间自动释放锁资源 2、使用TTL检查锁是否成功的被设置过期时间，如果返回-1（未被设置）的话，使用Expire为其设定过期时间 3、在释放锁的时候需要使用Watch命令，确保监测的值在事务执行时时未被改变，如果其他进程修改了锁，会触发事务异常，然后重新执行Watch。  分享一个我写的Redis封装类，仅实现了连接和锁">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-04-12T12:38:39.000Z">
-<meta property="article:modified_time" content="2020-04-12T13:01:59.168Z">
+<meta property="article:modified_time" content="2020-04-12T14:06:26.652Z">
 <meta property="article:author" content="guaik">
 <meta property="article:tag" content="golang">
 <meta property="article:tag" content="redis">
@@ -129,7 +129,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">Golang基于Redis的分布式锁</div>
+        <div class="flex-col header-title ellipsis">基于Redis的分布式锁</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -151,15 +151,13 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">Golang基于Redis的分布式锁</h1>
+        <h1 class="title">基于Redis的分布式锁</h1>
         <h5 class="subtitle">
             
                 <time datetime="2020-04-12T12:38:39.000Z" itemprop="datePublished" class="page-time">
   2020-04-12
 </time>
 
-
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a></li></ul>
 
             
         </h5>
@@ -181,17 +179,15 @@
     </aside>
 
 
-<article id="post-Golang基于Redis的分布式锁"
+<article id="post-基于Redis的分布式锁"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">Golang基于Redis的分布式锁</h1>
+        <h1 class="post-card-title">基于Redis的分布式锁</h1>
         <div class="post-meta">
             <time class="post-time" title="2020-04-12 20:38:39" datetime="2020-04-12T12:38:39.000Z"  itemprop="datePublished">2020-04-12</time>
 
             
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a></li></ul>
-
 
 
             
@@ -216,12 +212,12 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2020-04-12T13:01:59.168Z" itemprop="dateUpdated">2020-04-12 21:01:59</time>
+    Last updated: <time datetime="2020-04-12T14:06:26.652Z" itemprop="dateUpdated">2020-04-12 22:06:26</time>
 </span><br>
 
 
         
-        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" target="_blank" rel="external">https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</a>
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2020/04/12/%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" target="_blank" rel="external">https://guaik.github.io/2020/04/12/%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</a>
         
     </div>
     
@@ -252,7 +248,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=《Golang基于Redis的分布式锁》 — 怪客的Blog&pic=https://guaik.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://guaik.github.io/2020/04/12/%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=《基于Redis的分布式锁》 — 怪客的Blog&pic=https://guaik.github.io/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -262,22 +258,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=《Golang基于Redis的分布式锁》 — 怪客的Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://guaik.github.io/2020/04/12/%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=《基于Redis的分布式锁》 — 怪客的Blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://guaik.github.io/2020/04/12/%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Golang基于Redis的分布式锁》 — 怪客的Blog&url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&via=https://guaik.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《基于Redis的分布式锁》 — 怪客的Blog&url=https://guaik.github.io/2020/04/12/%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&via=https://guaik.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://guaik.github.io/2020/04/12/%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -297,6 +293,19 @@
     </div>
 
     
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2020/04/12/%E5%8A%A0%E6%9D%83%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">加权随机算法</h4>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
 
 
     
@@ -400,7 +409,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=《Golang基于Redis的分布式锁》 — 怪客的Blog&pic=https://guaik.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://guaik.github.io/2020/04/12/%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=《基于Redis的分布式锁》 — 怪客的Blog&pic=https://guaik.github.io/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -410,22 +419,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=《Golang基于Redis的分布式锁》 — 怪客的Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://guaik.github.io/2020/04/12/%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=《基于Redis的分布式锁》 — 怪客的Blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://guaik.github.io/2020/04/12/%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Golang基于Redis的分布式锁》 — 怪客的Blog&url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&via=https://guaik.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《基于Redis的分布式锁》 — 怪客的Blog&url=https://guaik.github.io/2020/04/12/%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&via=https://guaik.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://guaik.github.io/2020/04/12/Golang%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://guaik.github.io/2020/04/12/%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -436,7 +445,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAAD+0lEQVR42u3aS47iQBAFQN//0j3bkaax38ssupEmvEKA7aowUpKf64qPr7+O+3deffrv1e7PevWd+3fuzzp24MCBAweOeKv3C8rfbxeaLP3VXfJHdb9HHDhw4MBxliMPh8mneVBscfP1JCvEgQMHDhyfwJGkarNkLHl9HzjbB4YDBw4cOD6HIwmE7VmzlDIJxjhw4MCB4+c5ktu3KVkOtA/AbXHzQK0UBw4cOHCkke5qg+7nv37LfAcOHDhw4CiTpTwQ7tOwWbLXFigfVoUDBw4cONYceUCaAW2Kg5u21qwQiQMHDhw4TnHsN58XE/Mrb77ZFh+vs78FHDhw4PjvOfIkqm0ObVpE7YZPlThx4MCBA8eGY1/CS248GylIRijabz48Nhw4cODAseZIkrfZp3nAzq/WtppmZUccOHDgwLHhSJKuNqDOCo5JIG8fT70vHDhw4MCx5jiV6nwFx2yIIU/e2h0VvxQcOHDgwBFztGlYm9ptmGbJWJvUfdN2woEDBw4cC448DWs3cKqllI84bO6LAwcOHDhOceRjanlYzcuOm9C+GaF4CLE4cODAgeMNHLMWThL22oQqv+am1fQQaHHgwIEDR1dbu/IwOVtKkU3GyWGy+dXQBg4cOHDgGHG0adI+jG2GG/IRitn6ceDAgQPHnmNWBNy0gvJBhPzB5MXBInnDgQMHDhwLjnyMYJaS5clVHsjPvn7IaHHgwIEDR3yvfNQgaRTN2kuzQHgqkOPAgQMHjndw5BvYh+HZlVuU4fpx4MCBA8chjjbUDctt8RU2zafVQAYOHDhw4Dgz21ajzL6fJHszps06D/xGcODAgQNH3MffjKntCfKNza4W/S3AgQMHDhwjjvuTN7pnRxMSoDxVGw7J4cCBAweOW45NMpYU+4pnMirktdAPjwcHDhw4cBziyEtmm0G0PIjOQn4e5qP5Dhw4cODAMc+PisGFvCzYjsflLaW8jZSPYuDAgQMHjlMcRT9q1OZpC39tCbJ9DA/3woEDBw4chzjy5k2y1bZUt2lubdb8zZVx4MCBA8cbONpNJuW8GVPe4tqs5yHQ4sCBAweOEUdbYpsV+zblxX2pMQrYOHDgwIFjzdEmVEma1Aa5tgSZHCsmHDhw4MCx4Njfpi3h5U2g9gFsBiCGTwAHDhw4cCyOzYDCjDJP9pKA2jbAcODAgQPHhqO98YwmbzK1gXkTaHHgwIEDx/s4NoEqKQ62ET5vTc3+O7w8FwcOHDhw/DjHvtXUXvlsAfHh7jhw4MCB41c52pGINhnL08VZa+3lfAcOHDhw4FhztCnTDK4da0iYNoMRq1opDhw4cOBYDzTMErM8GSsSrVEiNxuMwIEDBw4cMccf7X3Yu5tMw0wAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADM0lEQVR42u3aQW7jQAwEwPz/015gT1kgdro58iJiSicDliXV6ECTPR8f8fH4e3z+/Pl4fWb+7bPrP7vjs2e47MDGxsa+CTu/wYz9+rcnd8mv/8XSYGNjY69j/5+ilSx38u2sKGJjY2Nj5//tZwUsX/SkBGJjY2NjJ4B2bpPc9/U5J4MqbGxs7N3s2SB+thzJYCgPAN4+S8PGxsb+8exZ0PszP78938bGxsb+YexHeeSxwVWj/GTwVCuwsbGxF7FPotl2xJM3GyfjquJq2NjY2IvYsyHRSfHIy2E7Hhq2K9jY2Ni3ZSdNRRugJuUtuctJE/LN1bCxsbF/Aft1STvZmpOUq6sW9JtZGjY2NvYKdgLOlyBvG2bBwyyoeCrCxsbGXs1+XHq8eyNm8nq+eBJsbGzsFewkKE1ShVkbk4cQ+bNd8J6xsbGxb8U+GfRcFdYmZa8dP0XjMGxsbOxF7OKkuGjNwoM2kMg3Yj69JjY2NvYK9nCdRjs9Z5HwrLgejZawsbGxb8KetQT5ID4PYmf3zRcLGxsbeyu7Ha+fFKqTJcjvm+CxsbGx97FnY/oZ+Hxb52wQho2Njb2b3RawfCNO2yokUfGsESoSBmxsbOzbstvBTbvRJy9meUnLX16UimBjY2Pflp2UjfYh2oLUxgaXbQDCxsbGXsGeDY/aIte2GUlxahcFGxsbeys7x8w22ZxEue1LOgoSsLGxsW/LLja4jDbHzLbm5IHE7LVhY2Nj72DPYt12U85JtJAXyyKcwMbGxl7KPhkhnZS9NhKejbH++YyNjY29jp2P468tUbNRVFtco/4JGxsb+7bsvPC00ew7hkdtia3jAWxsbOwbsh8HR4KcNTP5ErRpNjY2NvZWdnK5PNBtW5qEnW/oiXoNbGxs7HXs86LVFrME37YoRTHDxsbGXsRuAVdtu8kHQOdBxREeGxsb+ybstgFoh/vvGx4dhb7Y2NjY69izlqA9py14+QArH5lhY2Nj/2Z20lq0v8qbn1n5fGrExsbG/sXsWYnKw91ZdNGGCtjY2Nj72LML5eP7duSUx8bDgoqNjY29iN0GvbNRTpsw53FF+2KwsbGxF7H/ACxvgwa+5wHAAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 
