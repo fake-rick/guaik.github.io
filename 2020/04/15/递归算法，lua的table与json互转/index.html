@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>递归算法，lua的table与json互转 | 怪客的Blog | 分享一些黑科技</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="golang,递归,lua,table,json">
+    <meta name="description" content="标题几乎是关键词组成，那么这篇文章会讲些什么？ 递归算法的使用 golang调用lua的方法 lua中table与json的相互转换  递归算法特性处理层级关系的结构，遍历数据非它莫属 如何设计递归 层级分类，统一函数参数与返回值  何时开始返回   应用小白能听懂的：什么是层级关系的结构呢？在windows系统中有个“我的电脑”，“我的电脑”中还有C,D,E,F盘，C盘中还有windows目录存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="递归算法，lua的table与json互转">
+<meta property="og:url" content="https://guaik.github.io/2020/04/15/%E9%80%92%E5%BD%92%E7%AE%97%E6%B3%95%EF%BC%8Clua%E7%9A%84table%E4%B8%8Ejson%E4%BA%92%E8%BD%AC/index.html">
+<meta property="og:site_name" content="怪客的Blog">
+<meta property="og:description" content="标题几乎是关键词组成，那么这篇文章会讲些什么？ 递归算法的使用 golang调用lua的方法 lua中table与json的相互转换  递归算法特性处理层级关系的结构，遍历数据非它莫属 如何设计递归 层级分类，统一函数参数与返回值  何时开始返回   应用小白能听懂的：什么是层级关系的结构呢？在windows系统中有个“我的电脑”，“我的电脑”中还有C,D,E,F盘，C盘中还有windows目录存">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-15T04:10:00.000Z">
+<meta property="article:modified_time" content="2020-05-23T13:43:21.418Z">
+<meta property="article:author" content="guaik">
+<meta property="article:tag" content="golang">
+<meta property="article:tag" content="递归">
+<meta property="article:tag" content="lua">
+<meta property="article:tag" content="table">
+<meta property="article:tag" content="json">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="怪客的Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">guaik</h5>
+          <a href="mailto:luting.gu@gmail.com" title="luting.gu@gmail.com" class="mail">luting.gu@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                档案
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/guaik" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.weibo.com/guaiker" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">递归算法，lua的table与json互转</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">递归算法，lua的table与json互转</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-04-15T04:10:00.000Z" itemprop="datePublished" class="page-time">
+  2020-04-15
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#标题几乎是关键词组成，那么这篇文章会讲些什么？"><span class="post-toc-number">1.</span> <span class="post-toc-text">标题几乎是关键词组成，那么这篇文章会讲些什么？</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#递归算法"><span class="post-toc-number">2.</span> <span class="post-toc-text">递归算法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#特性"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">特性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#如何设计递归"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">如何设计递归</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#应用"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">应用</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#golang如何调用lua的方法"><span class="post-toc-number">3.</span> <span class="post-toc-text">golang如何调用lua的方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#lua是什么"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">lua是什么</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#lua的运行时环境"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">lua的运行时环境</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#golang与lua的交互"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">golang与lua的交互</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#在lua中调用golang提供的接口"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">在lua中调用golang提供的接口</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-递归算法，lua的table与json互转"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">递归算法，lua的table与json互转</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-04-15 12:10:00" datetime="2020-04-15T04:10:00.000Z"  itemprop="datePublished">2020-04-15</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="标题几乎是关键词组成，那么这篇文章会讲些什么？"><a href="#标题几乎是关键词组成，那么这篇文章会讲些什么？" class="headerlink" title="标题几乎是关键词组成，那么这篇文章会讲些什么？"></a>标题几乎是关键词组成，那么这篇文章会讲些什么？</h2><ul>
+<li>递归算法的使用</li>
+<li>golang调用lua的方法</li>
+<li>lua中table与json的相互转换</li>
+</ul>
+<h2 id="递归算法"><a href="#递归算法" class="headerlink" title="递归算法"></a>递归算法</h2><h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><p>处理层级关系的结构，遍历数据非它莫属</p>
+<h3 id="如何设计递归"><a href="#如何设计递归" class="headerlink" title="如何设计递归"></a>如何设计递归</h3><ul>
+<li><p>层级分类，统一函数参数与返回值</p>
+</li>
+<li><p>何时开始返回</p>
+</li>
+</ul>
+<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><p>小白能听懂的：什么是层级关系的结构呢？在windows系统中有个“我的电脑”，“我的电脑”中还有C,D,E,F盘，C盘中还有windows目录存放系统文件，D盘中还有我珍藏多年的【日本***空小姐】。所以最简单的理解就是一层套一层的关系。</p>
+<p>中白能听懂的：二叉树遍历，父子节点关系。json中一层层的花括号{}。这些都是明显的层级关系。</p>
+<p>所以本文中处理table与json的转换就使用递归算法。</p>
+<h2 id="golang如何调用lua的方法"><a href="#golang如何调用lua的方法" class="headerlink" title="golang如何调用lua的方法"></a>golang如何调用lua的方法</h2><h3 id="lua是什么"><a href="#lua是什么" class="headerlink" title="lua是什么"></a>lua是什么</h3><p>首先它是一门脚本语言，但是它特别适合嵌入其他的语言中。那么为什么要嵌入其他语言呢？自己都是一个语言了在嵌入个lua不多余吗？</p>
+<p>我就拿C++举个栗子，C++的程序每次更新代码都是需要重新编译链接的，哪怕改动一点逻辑就要重新编译才行。某些情况下程序经常会修改一些业务逻辑，游戏中的智能状态机，在调试的时候每次修改都需要重新编译链接就太麻烦了，如果把状态机写个接口给lua去调用，修改脚本就可以调整状态机的逻辑，这太爽了。</p>
+<ul>
+<li>安装lua的依赖包</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/yuin/gopher-lua</span><br></pre></td></tr></table></figure>
+
+<h3 id="lua的运行时环境"><a href="#lua的运行时环境" class="headerlink" title="lua的运行时环境"></a>lua的运行时环境</h3><p>lua的运行状态（State）存放着运行时的一些关键数据：运行堆栈，上下文数据等（记不清了讲多了你也记不住），总之不同的状态是相互独立的，不同的状态间数据是不可见的，所以多线程安全。</p>
+<ul>
+<li>创建lua状态</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">env := lua.NewState()</span><br></pre></td></tr></table></figure>
+
+<h3 id="golang与lua的交互"><a href="#golang与lua的交互" class="headerlink" title="golang与lua的交互"></a>golang与lua的交互</h3><p>lua作为一门嵌入式的语言，有个很重要的特点就是能够在lua中能够调用被寄生语言的函数（寄生兽看过吧？），这样就完成了被寄宿的语言开放接口，然后通过lua编写脚本就能够方便的修改逻辑了。</p>
+<ul>
+<li>在lua中注册新的函数</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// 转换的逻辑是由golang编写的提供给lua调用的接口代码</span></span><br><span class="line"><span class="comment">/// lua本身不支持table与json互转</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// table转json字符串</span></span><br><span class="line">env.SetGlobal(<span class="string">"jsonMarshal"</span>, env.NewFunction(luaJson.JsonMarshal))</span><br><span class="line"><span class="comment">// json字符串转table</span></span><br><span class="line">env.SetGlobal(<span class="string">"jsonUnMarshal"</span>, env.NewFunction(luaJson.JsonUnMarshal))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>相关接口代码</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> json</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"encoding/json"</span></span><br><span class="line">    <span class="string">"github.com/golang/glog"</span></span><br><span class="line">    lua <span class="string">"github.com/yuin/gopher-lua"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检查Table是否为List</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">checkList</span><span class="params">(value lua.LValue)</span> <span class="params">(b <span class="keyword">bool</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> value.Type().String() == <span class="string">"table"</span> &#123;</span><br><span class="line">        b = <span class="literal">true</span></span><br><span class="line">        value.(*lua.LTable).ForEach(<span class="function"><span class="keyword">func</span><span class="params">(k, v lua.LValue)</span></span> &#123;</span><br><span class="line">            <span class="keyword">if</span> k.Type().String() != <span class="string">"number"</span> &#123;</span><br><span class="line">                b = <span class="literal">false</span></span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">marshal</span><span class="params">(data lua.LValue)</span> <span class="title">interface</span></span>&#123;&#125; &#123;</span><br><span class="line">    <span class="keyword">switch</span> data.Type() &#123;</span><br><span class="line">    <span class="keyword">case</span> lua.LTTable:</span><br><span class="line">        <span class="keyword">if</span> checkList(data) &#123;</span><br><span class="line">            jdata := <span class="built_in">make</span>([]<span class="keyword">interface</span>&#123;&#125;, <span class="number">0</span>)</span><br><span class="line">            data.(*lua.LTable).ForEach(<span class="function"><span class="keyword">func</span><span class="params">(key, value lua.LValue)</span></span> &#123;</span><br><span class="line">                jdata = <span class="built_in">append</span>(jdata, marshal(value))</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="keyword">return</span> jdata</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            jdata := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;&#123;&#125;</span><br><span class="line">            data.(*lua.LTable).ForEach(<span class="function"><span class="keyword">func</span><span class="params">(key, value lua.LValue)</span></span> &#123;</span><br><span class="line">                jdata[key.String()] = marshal(value)</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="keyword">return</span> jdata</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">case</span> lua.LTNumber:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">float64</span>(data.(lua.LNumber))</span><br><span class="line">    <span class="keyword">case</span> lua.LTString:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">string</span>(data.(lua.LString))</span><br><span class="line">    <span class="keyword">case</span> lua.LTBool:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">bool</span>(data.(lua.LBool))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">JsonMarshal</span><span class="params">(L *lua.LState)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    data := L.ToTable(<span class="number">1</span>)</span><br><span class="line">    str, err := json.Marshal(marshal(data))</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        glog.Error(err)</span><br><span class="line">    &#125;</span><br><span class="line">    L.Push(lua.LString(str))</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">unmarshal</span><span class="params">(L *lua.LState, data <span class="keyword">interface</span>&#123;&#125;)</span> <span class="title">lua</span>.<span class="title">LValue</span></span> &#123;</span><br><span class="line">    <span class="keyword">switch</span> data.(<span class="keyword">type</span>) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;:</span><br><span class="line">        tb := L.NewTable()</span><br><span class="line">        <span class="keyword">for</span> k, v := <span class="keyword">range</span> data.(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;) &#123;</span><br><span class="line">            tb.RawSet(lua.LString(k), unmarshal(L, v))</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> tb</span><br><span class="line">    <span class="keyword">case</span> []<span class="keyword">interface</span>&#123;&#125;:</span><br><span class="line">        tb := L.NewTable()</span><br><span class="line">        <span class="keyword">for</span> i, v := <span class="keyword">range</span> data.([]<span class="keyword">interface</span>&#123;&#125;) &#123;</span><br><span class="line">            tb.Insert(i+<span class="number">1</span>, unmarshal(L, v))</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> tb</span><br><span class="line">    <span class="keyword">case</span> <span class="keyword">float64</span>:</span><br><span class="line">        <span class="keyword">return</span> lua.LNumber(data.(<span class="keyword">float64</span>))</span><br><span class="line">    <span class="keyword">case</span> <span class="keyword">string</span>:</span><br><span class="line">        <span class="keyword">return</span> lua.LString(data.(<span class="keyword">string</span>))</span><br><span class="line">    <span class="keyword">case</span> <span class="keyword">bool</span>:</span><br><span class="line">        <span class="keyword">return</span> lua.LBool(data.(<span class="keyword">bool</span>))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> lua.LNil</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">JsonUnMarshal</span><span class="params">(L *lua.LState)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    str := L.ToString(<span class="number">1</span>)</span><br><span class="line">    jdata := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;&#123;&#125;</span><br><span class="line">    err := json.Unmarshal([]<span class="keyword">byte</span>(str), &amp;jdata)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        glog.Error(err)</span><br><span class="line">    &#125;</span><br><span class="line">    L.Push(unmarshal(L, jdata))</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="在lua中调用golang提供的接口"><a href="#在lua中调用golang提供的接口" class="headerlink" title="在lua中调用golang提供的接口"></a>在lua中调用golang提供的接口</h3><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">processor</span><span class="params">()</span></span></span><br><span class="line">    data = &#123;&#125;</span><br><span class="line">    data[<span class="string">"hello"</span>]=<span class="string">"world"</span></span><br><span class="line">    data[<span class="string">"a"</span>] = &#123;&#125;</span><br><span class="line">    data[<span class="string">"a"</span>][<span class="string">"b"</span>] = <span class="string">"b"</span></span><br><span class="line">    data[<span class="string">"a"</span>][<span class="string">"c"</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>&#125;</span><br><span class="line">    res = jsonMarshal(data)</span><br><span class="line">    res = jsonUnMarshal(res)</span><br><span class="line">    <span class="keyword">for</span> k,v <span class="keyword">in</span> <span class="built_in">ipairs</span>(res[<span class="string">"a"</span>][<span class="string">"c"</span>]) <span class="keyword">do</span></span><br><span class="line">        <span class="built_in">print</span>(k,v)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-05-23T13:43:21.418Z" itemprop="dateUpdated">2020-05-23 21:43:21</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2020/04/15/%E9%80%92%E5%BD%92%E7%AE%97%E6%B3%95%EF%BC%8Clua%E7%9A%84table%E4%B8%8Ejson%E4%BA%92%E8%BD%AC/" target="_blank" rel="external">https://guaik.github.io/2020/04/15/%E9%80%92%E5%BD%92%E7%AE%97%E6%B3%95%EF%BC%8Clua%E7%9A%84table%E4%B8%8Ejson%E4%BA%92%E8%BD%AC/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://guaik.github.io">
+            <img src="/img/avatar.jpg" alt="guaik">
+            guaik
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/" rel="tag">golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/json/" rel="tag">json</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/lua/" rel="tag">lua</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/table/" rel="tag">table</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://guaik.github.io/2020/04/15/%E9%80%92%E5%BD%92%E7%AE%97%E6%B3%95%EF%BC%8Clua%E7%9A%84table%E4%B8%8Ejson%E4%BA%92%E8%BD%AC/&title=《递归算法，lua的table与json互转》 — 怪客的Blog&pic=https://guaik.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://guaik.github.io/2020/04/15/%E9%80%92%E5%BD%92%E7%AE%97%E6%B3%95%EF%BC%8Clua%E7%9A%84table%E4%B8%8Ejson%E4%BA%92%E8%BD%AC/&title=《递归算法，lua的table与json互转》 — 怪客的Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://guaik.github.io/2020/04/15/%E9%80%92%E5%BD%92%E7%AE%97%E6%B3%95%EF%BC%8Clua%E7%9A%84table%E4%B8%8Ejson%E4%BA%92%E8%BD%AC/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《递归算法，lua的table与json互转》 — 怪客的Blog&url=https://guaik.github.io/2020/04/15/%E9%80%92%E5%BD%92%E7%AE%97%E6%B3%95%EF%BC%8Clua%E7%9A%84table%E4%B8%8Ejson%E4%BA%92%E8%BD%AC/&via=https://guaik.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://guaik.github.io/2020/04/15/%E9%80%92%E5%BD%92%E7%AE%97%E6%B3%95%EF%BC%8Clua%E7%9A%84table%E4%B8%8Ejson%E4%BA%92%E8%BD%AC/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2020/05/23/Flutter%E4%BD%BF%E7%94%A8SharedPreferences%EF%BC%9A%E5%8D%95%E4%BE%8B+%E5%90%8C%E6%AD%A5/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Flutter使用SharedPreferences：单例+同步</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/04/13/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%9C%A8%E5%89%8D%E7%AB%AF%E7%9A%84%E5%BA%94%E7%94%A8/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">消息队列在前端的应用</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'guaik-blog';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license noopener" href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>guaik &copy; 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://guaik.github.io/2020/04/15/%E9%80%92%E5%BD%92%E7%AE%97%E6%B3%95%EF%BC%8Clua%E7%9A%84table%E4%B8%8Ejson%E4%BA%92%E8%BD%AC/&title=《递归算法，lua的table与json互转》 — 怪客的Blog&pic=https://guaik.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://guaik.github.io/2020/04/15/%E9%80%92%E5%BD%92%E7%AE%97%E6%B3%95%EF%BC%8Clua%E7%9A%84table%E4%B8%8Ejson%E4%BA%92%E8%BD%AC/&title=《递归算法，lua的table与json互转》 — 怪客的Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://guaik.github.io/2020/04/15/%E9%80%92%E5%BD%92%E7%AE%97%E6%B3%95%EF%BC%8Clua%E7%9A%84table%E4%B8%8Ejson%E4%BA%92%E8%BD%AC/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《递归算法，lua的table与json互转》 — 怪客的Blog&url=https://guaik.github.io/2020/04/15/%E9%80%92%E5%BD%92%E7%AE%97%E6%B3%95%EF%BC%8Clua%E7%9A%84table%E4%B8%8Ejson%E4%BA%92%E8%BD%AC/&via=https://guaik.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://guaik.github.io/2020/04/15/%E9%80%92%E5%BD%92%E7%AE%97%E6%B3%95%EF%BC%8Clua%E7%9A%84table%E4%B8%8Ejson%E4%BA%92%E8%BD%AC/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASYAAAEmCAAAAADqr2IGAAAEfklEQVR42u3aSW7jQBAEQP//057LHAYYS86sogA1FToJFM0l2kDX9vUVf74ffP79NbnC8+P5dR791ffTT36X4QcTJkyYML0lU37p/BGfE/x/5n4xNmc+vy8mTJgwYboHU37j9vWeQ28Q8727BcWECRMmTJ/MlL/MK8KOdiPPQxZMmDBhwoTpgpstSsxt6XmTTmPChAkTpvsx5ZebtQ+fp6ztOcmR2fELauGYMGHChOnNmNot+U7fXzLfhAkTJkyY3obpu/xcVbRNAot22WZbfvTWmDBhwoTpWKZ8g2wbh8mRfGN+XTszeV9MmDBhwnQuU3KJqzbpvCzbLsNVJeaH3zFhwoQJ0+FMs3bj7BHzdDoZEsoXIOf+4RxMmDBhwnQ406z519Lkf5sEIm2RdxYcYMKECROm05mi7bC8WZIqzxLp2Tl56FCM72DChAkTpgOZNmMus2nPPDiYvXZbYv6FHhMmTJgwHc60Kae2YzqbYnEeXmwS8mh2CRMmTJgwHcI0Gw9tE93NYiQLkxeU86fFhAkTJkz3YGoHaK5KiVuCfJBoD/fDcUyYMGHCdCxT+zLDImnZOp0FBG2RdxY0YMKECROmU5jyJuKsZZhcLQ8d9ovX0mPChAkTptOZZk3NtuTaXrNNSjcodfSECRMmTJgOZ7pqFGbWvMzT2lk7c7a/Y8KECROmezDlSeaM+Ko2ZFu9nlW4MWHChAnTPZjqEudiPLS9/rWvuvo/woQJEyZMxzLtx1/yVHbTHG3LwbO0/JdfMWHChAnTgUybImxSSJ2Ny+RhSts0nX3HhAkTJkz3ZsrPaVPivK04w93fqwgIMGHChAnT2zO15deEI0l08/LuLK1ty7sPawOYMGHChOlAplkymW/DbaiRpNPtEE+ekBeNT0yYMGHCdCBT+1ht8rnfqmcjQUl5ughxMGHChAnTUUxJ2bQdlymij/Jl9gM97RJiwoQJE6Z7MOWDMrPH2gQQm7R5c+ViLgkTJkyYML0906bI2yars/bhrJ3ZJuQPz8eECRMmTLdjGtaJXzBwM7vvVcEBJkyYMGG6E9NVQUCeAO8T73axZ0EGJkyYMGE6nekqrDwFbYvIG77ZMtTRDSZMmDBhekumGdlmq56N+OQLNkutizfFhAkTJkxHMeVbb/LrPt1t25P77T86ExMmTJgwHc60GbipU8d4GZLW5v55ooQZEyZMmDDdgmnTYmy32Pbl2wGgfMmjVBwTJkyYMN2C6flrtGFBkqbmW3KSKrfXx4QJEyZMn8CUb9WzVDZ/mVmLdJMSrz6YMGHChOkQptk4SzvYmjc+2+GhNmho/xX+/ooJEyZMmI5lmu2Js8mWfWLchhT59duUHhMmTJgwncU0G5S5tgnaQlxV9i1SZUyYMGHCdDhTPc5yaQtzFo5c1XaNlhYTJkyYMH0YU1uuzRuQm6Zp/uQ1FiZMmDBh+kimnGyDNWuXton0L+EFJkyYMGE6nKkd1mlfe1YObgd3XnEEEyZMmDCdzrQp3eapaXvOZuOfNT6HNJgwYcKE6X2Z/gCvRET1BuHhIwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
