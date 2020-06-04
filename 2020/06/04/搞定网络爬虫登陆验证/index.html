@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://guaik.github.io/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/WX20200604-110003.png">
 <meta property="og:image" content="https://guaik.github.io/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/WX20200604-111207.png">
 <meta property="article:published_time" content="2020-06-04T02:04:40.000Z">
-<meta property="article:modified_time" content="2020-06-04T03:58:39.382Z">
+<meta property="article:modified_time" content="2020-06-04T04:09:20.432Z">
 <meta property="article:author" content="guaik">
 <meta property="article:tag" content="爬虫">
 <meta property="article:tag" content="验证">
@@ -179,7 +179,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#登陆验证是什么？"><span class="post-toc-number">1.</span> <span class="post-toc-text">登陆验证是什么？</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分析"><span class="post-toc-number">2.</span> <span class="post-toc-text">分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#url分析"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">url分析</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#登陆分析"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">登陆分析</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#爬虫设计"><span class="post-toc-number">3.</span> <span class="post-toc-text">爬虫设计</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#需求1：需要登陆验证，并且要处理登陆验证码。"><span class="post-toc-number">3.0.1.</span> <span class="post-toc-text">需求1：需要登陆验证，并且要处理登陆验证码。</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#需求2：在请求数据的时候，前两次重定向应答的headers中都需要设置Cookie。"><span class="post-toc-number">3.0.2.</span> <span class="post-toc-text">需求2：在请求数据的时候，前两次重定向应答的headers中都需要设置Cookie。</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#DEMO"><span class="post-toc-number">4.</span> <span class="post-toc-text">DEMO</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#登陆验证是什么？"><span class="post-toc-number">1.</span> <span class="post-toc-text">登陆验证是什么？</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分析"><span class="post-toc-number">2.</span> <span class="post-toc-text">分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#url分析"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">url分析</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#登陆分析"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">登陆分析</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#爬虫设计"><span class="post-toc-number">3.</span> <span class="post-toc-text">爬虫设计</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#需求1：需要登陆验证，并且要处理登陆验证码"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">需求1：需要登陆验证，并且要处理登陆验证码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#需求2：在请求数据的时候，前两次重定向应答的headers中都需要设置Cookie"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">需求2：在请求数据的时候，前两次重定向应答的headers中都需要设置Cookie</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#DEMO"><span class="post-toc-number">4.</span> <span class="post-toc-text">DEMO</span></a></li></ol>
         </nav>
     </aside>
 
@@ -234,9 +234,9 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/WX20200604-104032@2x.png" alt="login" title>
+                    <img src="/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/WX20200604-104032@2x.png" alt="登陆" title>
                 </div>
-                <div class="image-caption">login</div>
+                <div class="image-caption">登陆</div>
             </figure>
 
 <p>通过上图可以知道获取一个图片是经过了3个步骤的，前两步骤的返回状态码都是302（重定向），第三步才是真正的请求。</p>
@@ -246,9 +246,9 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/WX20200604-104918.png" alt="login" title>
+                    <img src="/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/WX20200604-104918.png" alt="分析1" title>
                 </div>
-                <div class="image-caption">login</div>
+                <div class="image-caption">分析1</div>
             </figure>
 
 <blockquote>
@@ -261,9 +261,9 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/WX20200604-110003.png" alt="login" title>
+                    <img src="/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/WX20200604-110003.png" alt="分析2" title>
                 </div>
-                <div class="image-caption">login</div>
+                <div class="image-caption">分析2</div>
             </figure>
 
 <p><strong>这里有个重要信息，重定向的地址中带有token参数</strong></p>
@@ -273,17 +273,17 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/WX20200604-111207.png" alt="login" title>
+                    <img src="/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/WX20200604-111207.png" alt="分析3" title>
                 </div>
-                <div class="image-caption">login</div>
+                <div class="image-caption">分析3</div>
             </figure>
 
 <p>继续分析返回数据，发现Content-Type是image/png，这时候就可以确认返回的数据是图片格式了。</p>
 <h2 id="爬虫设计"><a href="#爬虫设计" class="headerlink" title="爬虫设计"></a>爬虫设计</h2><p><strong>开发语言：Python3.X</strong></p>
-<h4 id="需求1：需要登陆验证，并且要处理登陆验证码。"><a href="#需求1：需要登陆验证，并且要处理登陆验证码。" class="headerlink" title="需求1：需要登陆验证，并且要处理登陆验证码。"></a>需求1：需要登陆验证，并且要处理登陆验证码。</h4><p>实现：直接使用浏览器登陆后使用浏览器生成的Cookie，用到的库：</p>
+<h3 id="需求1：需要登陆验证，并且要处理登陆验证码"><a href="#需求1：需要登陆验证，并且要处理登陆验证码" class="headerlink" title="需求1：需要登陆验证，并且要处理登陆验证码"></a>需求1：需要登陆验证，并且要处理登陆验证码</h3><p>实现：直接使用浏览器登陆后使用浏览器生成的Cookie，用到的库：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install browser_cookie3</span><br></pre></td></tr></table></figure>
 
-<h4 id="需求2：在请求数据的时候，前两次重定向应答的headers中都需要设置Cookie。"><a href="#需求2：在请求数据的时候，前两次重定向应答的headers中都需要设置Cookie。" class="headerlink" title="需求2：在请求数据的时候，前两次重定向应答的headers中都需要设置Cookie。"></a>需求2：在请求数据的时候，前两次重定向应答的headers中都需要设置Cookie。</h4><p>实现：使用<code>urllib.request.HTTPCookieProcessor</code>来管理Cookie。</p>
+<h3 id="需求2：在请求数据的时候，前两次重定向应答的headers中都需要设置Cookie"><a href="#需求2：在请求数据的时候，前两次重定向应答的headers中都需要设置Cookie" class="headerlink" title="需求2：在请求数据的时候，前两次重定向应答的headers中都需要设置Cookie"></a>需求2：在请求数据的时候，前两次重定向应答的headers中都需要设置Cookie</h3><p>实现：使用<code>urllib.request.HTTPCookieProcessor</code>来管理Cookie</p>
 <h2 id="DEMO"><a href="#DEMO" class="headerlink" title="DEMO"></a>DEMO</h2><p>⚠️注意事项：</p>
 <p>1、测试发现需要登陆管理后台，下载最新的分析报告(excel)，从里边拿到图片的url才能使用当前浏览器的Cookie进行操作。</p>
 <p>2、第一次GET请求后发现headers中没有Location字段，但是在返回内容中找到了重定向用到的的url，所以用xpath提取出来使用。</p>
@@ -296,7 +296,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2020-06-04T03:58:39.382Z" itemprop="dateUpdated">2020-06-04 11:58:39</time>
+    Last updated: <time datetime="2020-06-04T04:09:20.432Z" itemprop="dateUpdated">2020-06-04 12:09:20</time>
 </span><br>
 
 
