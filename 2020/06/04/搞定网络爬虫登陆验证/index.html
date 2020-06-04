@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>搞定网络爬虫登陆验证 | 怪客的Blog | 分享一些黑科技</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="爬虫,验证">
+    <meta name="description" content="登陆验证是什么？https:&#x2F;&#x2F;www.wjx.cn&#x2F;wjx&#x2F;viewfile.aspx?path&#x3D;https%3a%2f%2fpubuserqiniu.paperol.cn%2f80373144_1_q1_1591205817ZF4mBh.png%3fattname%3d1_1_3EADD86A-FFEB-469C-A77E-A6F5C7B0D635.png&amp;activity&#x3D;80373">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搞定网络爬虫登陆验证">
+<meta property="og:url" content="https://guaik.github.io/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/index.html">
+<meta property="og:site_name" content="怪客的Blog">
+<meta property="og:description" content="登陆验证是什么？https:&#x2F;&#x2F;www.wjx.cn&#x2F;wjx&#x2F;viewfile.aspx?path&#x3D;https%3a%2f%2fpubuserqiniu.paperol.cn%2f80373144_1_q1_1591205817ZF4mBh.png%3fattname%3d1_1_3EADD86A-FFEB-469C-A77E-A6F5C7B0D635.png&amp;activity&#x3D;80373">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://guaik.github.io/.io//login.png">
+<meta property="og:image" content="https://guaik.github.io/.io//WX20200604-104032@2x.png">
+<meta property="og:image" content="https://guaik.github.io/.io//WX20200604-104918.png">
+<meta property="og:image" content="https://guaik.github.io/.io//WX20200604-110003.png">
+<meta property="og:image" content="https://guaik.github.io/.io//WX20200604-111207.png">
+<meta property="article:published_time" content="2020-06-04T02:04:40.000Z">
+<meta property="article:modified_time" content="2020-06-04T03:41:18.456Z">
+<meta property="article:author" content="guaik">
+<meta property="article:tag" content="爬虫">
+<meta property="article:tag" content="验证">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://guaik.github.io/.io//login.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="怪客的Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">guaik</h5>
+          <a href="mailto:luting.gu@gmail.com" title="luting.gu@gmail.com" class="mail">luting.gu@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                档案
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/guaik" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.weibo.com/guaiker" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">搞定网络爬虫登陆验证</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">搞定网络爬虫登陆验证</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-06-04T02:04:40.000Z" itemprop="datePublished" class="page-time">
+  2020-06-04
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#登陆验证是什么？"><span class="post-toc-number">1.</span> <span class="post-toc-text">登陆验证是什么？</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分析"><span class="post-toc-number">2.</span> <span class="post-toc-text">分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#url分析"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">url分析</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#登陆分析"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">登陆分析</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#爬虫设计"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">爬虫设计</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#需求1：需要登陆验证，并且要处理登陆验证码。"><span class="post-toc-number">2.3.1.</span> <span class="post-toc-text">需求1：需要登陆验证，并且要处理登陆验证码。</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#需求2：在请求数据的时候，前两次重定向应答的headers中都需要设置Cookie。"><span class="post-toc-number">2.3.2.</span> <span class="post-toc-text">需求2：在请求数据的时候，前两次重定向应答的headers中都需要设置Cookie。</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#DEMO"><span class="post-toc-number">3.</span> <span class="post-toc-text">DEMO</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-搞定网络爬虫登陆验证"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">搞定网络爬虫登陆验证</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-06-04 10:04:40" datetime="2020-06-04T02:04:40.000Z"  itemprop="datePublished">2020-06-04</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="登陆验证是什么？"><a href="#登陆验证是什么？" class="headerlink" title="登陆验证是什么？"></a>登陆验证是什么？</h2><p><a href="https://www.wjx.cn/wjx/viewfile.aspx?path=https%3a%2f%2fpubuserqiniu.paperol.cn%2f80373144_1_q1_1591205817ZF4mBh.png%3fattname%3d1_1_3EADD86A-FFEB-469C-A77E-A6F5C7B0D635.png&amp;activity=80373144" target="_blank" rel="noopener">https://www.wjx.cn/wjx/viewfile.aspx?path=https%3a%2f%2fpubuserqiniu.paperol.cn%2f80373144_1_q1_1591205817ZF4mBh.png%3fattname%3d1_1_3EADD86A-FFEB-469C-A77E-A6F5C7B0D635.png&amp;activity=80373144</a></p>
+<p>先点上边链接，发现打开的不是一张图片，而是一个登陆页面。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/.io//login.png" alt="login" title>
+                </div>
+                <div class="image-caption">login</div>
+            </figure>
+
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><h3 id="url分析"><a href="#url分析" class="headerlink" title="url分析"></a>url分析</h3><p>上边url是一个图片连接，但是实际的图片url是作为参数(path)传给服务器的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https%3a%2f%2fpubuserqiniu.paperol.cn%2f80373144_1_q1_1591205817ZF4mBh.png%3fattname%3d1_1_3EADD86A-FFEB-469C-A77E-A6F5C7B0D635.png</span><br></pre></td></tr></table></figure>
+
+<p>使用url解码看下图片地址</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://pubuserqiniu.paperol.cn/80373144_1_q1_1591205817ZF4mBh.png?attname=1_1_3EADD86A-FFEB-469C-A77E-A6F5C7B0D635.png</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以知道图片存储用的是七牛云的对象存储服务。</li>
+</ul>
+<h3 id="登陆分析"><a href="#登陆分析" class="headerlink" title="登陆分析"></a>登陆分析</h3><ul>
+<li><p>Chrome浏览器，打开“开发者工具”，点击“Network”，如果“Network”中存在内容，就先清空一下。</p>
+</li>
+<li><p>输入账号密码（可能需要输入验证码）登陆，查看“Network”中的数据：</p>
+</li>
+</ul>
+<blockquote>
+<p>当输入完账号密码后，图片已经被下载了</p>
+</blockquote>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/.io//WX20200604-104032@2x.png" alt="login" title>
+                </div>
+                <div class="image-caption">login</div>
+            </figure>
+
+<p>通过上图可以知道获取一个图片是经过了3个步骤的，前两步骤的返回状态码都是302（重定向），第三步才是真正的请求。</p>
+<ul>
+<li>点击第一个URL</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/.io//WX20200604-104918.png" alt="login" title>
+                </div>
+                <div class="image-caption">login</div>
+            </figure>
+
+<blockquote>
+<p>因为是302状态，所以检查返回数据的头部信息，能够发现两个关键参数：1、重定向地址（Location）。2、本地请求会在本地设置的Cookie。</p>
+<p>所有我们在开发脚本的时候也会使用到Cookie的功能。</p>
+</blockquote>
+<ul>
+<li>点击第二个URL(为第一个URL重定向的目标地址)</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/.io//WX20200604-110003.png" alt="login" title>
+                </div>
+                <div class="image-caption">login</div>
+            </figure>
+
+<p><strong>这里有个重要信息，重定向的地址中带有token参数</strong></p>
+<ul>
+<li>第三步，最后一步！</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/.io//WX20200604-111207.png" alt="login" title>
+                </div>
+                <div class="image-caption">login</div>
+            </figure>
+
+<p>继续分析返回数据，发现Content-Type是image/png，这时候就可以确认返回的数据是图片格式了。</p>
+<h3 id="爬虫设计"><a href="#爬虫设计" class="headerlink" title="爬虫设计"></a>爬虫设计</h3><p><strong>开发语言：Python3.X</strong></p>
+<h4 id="需求1：需要登陆验证，并且要处理登陆验证码。"><a href="#需求1：需要登陆验证，并且要处理登陆验证码。" class="headerlink" title="需求1：需要登陆验证，并且要处理登陆验证码。"></a>需求1：需要登陆验证，并且要处理登陆验证码。</h4><p>实现：直接使用浏览器登陆后使用浏览器生成的Cookie，用到的库：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install browser_cookie3</span><br></pre></td></tr></table></figure>
+
+<h4 id="需求2：在请求数据的时候，前两次重定向应答的headers中都需要设置Cookie。"><a href="#需求2：在请求数据的时候，前两次重定向应答的headers中都需要设置Cookie。" class="headerlink" title="需求2：在请求数据的时候，前两次重定向应答的headers中都需要设置Cookie。"></a>需求2：在请求数据的时候，前两次重定向应答的headers中都需要设置Cookie。</h4><p>实现：使用<code>urllib.request.HTTPCookieProcessor</code>来管理Cookie。</p>
+<h2 id="DEMO"><a href="#DEMO" class="headerlink" title="DEMO"></a>DEMO</h2><p>⚠️注意事项：</p>
+<p>1、测试发现需要登陆管理后台，下载最新的分析报告(excel)，从里边拿到图片的url才能使用当前浏览器的Cookie进行操作。</p>
+<p>2、第一次GET请求后发现headers中没有Location字段，但是在返回内容中找到了重定向用到的的url，所以用xpath提取出来使用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> browser_cookie3</span><br><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">()</span>:</span></span><br><span class="line">    url = <span class="string">"https://www.wjx.cn/wjx/viewfile.aspx?path=https%3a%2f%2fpubuserqiniu.paperol.cn%2f80373144_1_q1_1591205817ZF4mBh.png%3fattname%3d1_1_3EADD86A-FFEB-469C-A77E-A6F5C7B0D635.png&amp;activity=80373144"</span></span><br><span class="line">    filename = <span class="string">"./demo.png"</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 获取</span></span><br><span class="line">        cj = browser_cookie3.Firefox().load()</span><br><span class="line">        opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))</span><br><span class="line">        request = urllib.request.Request(url)</span><br><span class="line">        <span class="comment"># 第一次请求</span></span><br><span class="line">        response = opener.open(request)</span><br><span class="line">        data = response.read()</span><br><span class="line">        html = etree.HTML(data)</span><br><span class="line">        url = <span class="string">'https://www.wjx.cn'</span> + html.xpath(<span class="string">'//a/@href'</span>)[<span class="number">0</span>]</span><br><span class="line">        request = urllib.request.Request(url, method=<span class="string">"GET"</span>)</span><br><span class="line">        <span class="comment"># 第二次请求</span></span><br><span class="line">        response = opener.open(request)</span><br><span class="line">        <span class="keyword">if</span> (response.getcode() == <span class="number">200</span>):</span><br><span class="line">            <span class="keyword">with</span> open(filename, <span class="string">"wb"</span>) <span class="keyword">as</span> f:</span><br><span class="line">                f.write(response.read())  <span class="comment"># 将内容写入图片</span></span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        print(filename)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    download()</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-06-04T03:41:18.456Z" itemprop="dateUpdated">2020-06-04 11:41:18</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/" target="_blank" rel="external">https://guaik.github.io/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://guaik.github.io">
+            <img src="/img/avatar.jpg" alt="guaik">
+            guaik
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%AA%8C%E8%AF%81/" rel="tag">验证</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://guaik.github.io/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/&title=《搞定网络爬虫登陆验证》 — 怪客的Blog&pic=https://guaik.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://guaik.github.io/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/&title=《搞定网络爬虫登陆验证》 — 怪客的Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://guaik.github.io/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《搞定网络爬虫登陆验证》 — 怪客的Blog&url=https://guaik.github.io/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/&via=https://guaik.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://guaik.github.io/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/05/23/Flutter%E4%BD%BF%E7%94%A8SharedPreferences%EF%BC%9A%E5%8D%95%E4%BE%8B+%E5%90%8C%E6%AD%A5/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Flutter使用SharedPreferences：单例+同步</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+<section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'guaik-blog';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license noopener" href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>guaik &copy; 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://guaik.github.io/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/&title=《搞定网络爬虫登陆验证》 — 怪客的Blog&pic=https://guaik.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://guaik.github.io/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/&title=《搞定网络爬虫登陆验证》 — 怪客的Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://guaik.github.io/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《搞定网络爬虫登陆验证》 — 怪客的Blog&url=https://guaik.github.io/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/&via=https://guaik.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://guaik.github.io/2020/06/04/%E6%90%9E%E5%AE%9A%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB%E7%99%BB%E9%99%86%E9%AA%8C%E8%AF%81/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASYAAAEmCAAAAADqr2IGAAAEi0lEQVR42u3aS24bMRAFQN//0s7WBiLpve4RII5Lq8DRUGTNoj/sr6/48/3j8+jvP/83+f7Pvzxa7dH6j57N9/b1jg8mTJgwYfpIpmRbjzb6aLV268+fTdbZ7DBaBxMmTJgwHc7UHrgN4flh8hXyXc3OhQkTJkyYMCUHzsNwUh4nLykJ/5gwYcKECVPeGN0QbJrLyZrJfjBhwoQJ019gapebNVWfB+bZgfPXnJfTmDBhwoTpTkx5YL7fv98y34QJEyZMmD6G6bv85JeFs5Gda4dvZmf8zzqYMGHChOlYpjxAbmjy689Z8dzurT0vJkyYMGG6B9O1heVVB5uN/lw1foQJEyZMmO7B1Ibq5yh5WtBytK8nHxsqRoswYcKECdNRTJtF27GeTSs5B9oMAEVJACZMmDBhOpYpP+SsxL0qSBc5TnmWoseMCRMmTJiOYpqN5uRl86zgTL5/FeuLtAMTJkyYMB3LNNv0LABvhmaSgjZvRs8SC0yYMGHCdA+m4cPlpvPW8OzA1xbGmDBhwoTpXKYcorj8e0OzeLbbNgV5+OuYMGHChOlYprbUnF1/ztq17W9tStxo6AcTJkyYMN2OKUkLnn9mAXvTXM5fW35ZiwkTJkyY7sG0Ce35ANBVQ0KzlfNCfTiygwkTJkyYPozpeeCvvRcBfp8i5KVy3rz+1QvHhAkTJkwHMuXF7Ww05x0Jx+y1XXsiTJgwYcJ0FlP+2L5BHL2rsrS+dnwn6hBgwoQJE6ZjmfJQ3YbbWVqQt4zbNZMkAxMmTJgwnc6UbGt2o5dcRs5GeTalb9sy/tULx4QJEyZMBzIlW2+v+jYQs0RhVnLXgz6YMGHChOlAps1VX1KOtmlBHs7bo66avJgwYcKE6XCmZENt2bm5aNy0jDet3hcJASZMmDBhOpZp33htw/+GdXONOmwoY8KECROmY5nejdUWvbOjtu3gvHR/0SfAhAkTJkxHMeVXkm25uyo74xXa4rluc2PChAkTpgOZ8iRgE9r3ZeosWWnThajJiwkTJkyYjmLKLxqTH2hDdf5s3uTNB49W9JgwYcKE6UCmvOzMLx3bFu0MvS3gc2hMmDBhwnQ606zNOgvzs9J6kxC0zeiHT2HChAkTpmOZ2lJwE6Rnx26Pkb/mYfGMCRMmTJiOYmqDZd78bYvnfRN5Fv6jb2LChAkTpsOZZsM0+VjPDDEJ1cN+dvt6MGHChAnT4UyzqJcfo71KbEvfWXO5ePGYMGHChOkWTHkwbgdx8lK2DdvJDtv9R01eTJgwYcJ0CNO+n9lebbYb2iQHbZO3+GDChAkTpkOYZuMs7UBMDjp7qh0wqtfEhAkTJkzHMl0VE/PN5cXwrAifrZ8nQ5gwYcKE6USmWRKQtHRnAzTJU7OL0naoCBMmTJgw3YmpDaibY7e5yezaNd9t1BTGhAkTJkx/huna2nrWfp0Vt8/hXqQjmDBhwoTpzzDNyuC2lG3bsnlTOG9MX5A3YcKECROmj2Ga/UA+4DIbrLn2grOFxoQJEyZM92CatT6Tv7yjEM0hEtwLZpowYcKECdPnMv0DAcX9LmYDFQgAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
