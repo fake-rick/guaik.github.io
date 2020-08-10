@@ -29,7 +29,7 @@
 <meta property="og:description" content="安装MongoDB创建mongodb源文件vi &#x2F;etc&#x2F;yum.repos.d&#x2F;mongodb-org-4.4.repo 输入以下内容123456[mongodb-org-4.4]name&#x3D;MongoDB Repositorybaseurl&#x3D;https:&#x2F;&#x2F;repo.mongodb.org&#x2F;yum&#x2F;redhat&#x2F;$releasever&#x2F;mongodb-org&#x2F;4.4&#x2F;x86_64&#x2F;gpgchec">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-08-09T06:39:39.000Z">
-<meta property="article:modified_time" content="2020-08-09T07:22:46.534Z">
+<meta property="article:modified_time" content="2020-08-10T16:12:16.921Z">
 <meta property="article:author" content="guaik">
 <meta property="article:tag" content="mongodb">
 <meta name="twitter:card" content="summary">
@@ -260,7 +260,7 @@
 
 <h3 id="连接节点并初始化副本集"><a href="#连接节点并初始化副本集" class="headerlink" title="连接节点并初始化副本集"></a>连接节点并初始化副本集</h3><p><code>mongo --port=26001</code></p>
 <p>连接成功后输入输入以下指令，创建副本集配置。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">config = &#123; </span><br><span class="line">    _id : <span class="string">"guaik"</span>, </span><br><span class="line">    members : [ </span><br><span class="line">        &#123;_id : 0, host : <span class="string">"192.168.0.19:26001"</span> &#125;, </span><br><span class="line">        &#123;_id : 1, host : <span class="string">"192.168.0.20:26002"</span> &#125;, </span><br><span class="line">        &#123;_id : 2, host : <span class="string">"192.168.0.21:26003"</span>&#125; </span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">config = &#123; </span><br><span class="line">    _id : <span class="string">"guaik"</span>, </span><br><span class="line">    members : [ </span><br><span class="line">        &#123;_id : 0, host : <span class="string">"192.168.1.100:26001"</span> &#125;, </span><br><span class="line">        &#123;_id : 1, host : <span class="string">"192.168.1.101:26002"</span> &#125;, </span><br><span class="line">        &#123;_id : 2, host : <span class="string">"192.168.1.102:26003"</span>&#125; </span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>初始化副本集</li>
@@ -287,7 +287,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2020-08-09T07:22:46.534Z" itemprop="dateUpdated">2020-08-09 15:22:46</time>
+    Last updated: <time datetime="2020-08-10T16:12:16.921Z" itemprop="dateUpdated">2020-08-11 00:12:16</time>
 </span><br>
 
 
