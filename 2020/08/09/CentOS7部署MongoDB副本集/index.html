@@ -29,7 +29,7 @@
 <meta property="og:description" content="安装MongoDB创建mongodb源文件vi &#x2F;etc&#x2F;yum.repos.d&#x2F;mongodb-org-4.4.repo 输入以下内容123456[mongodb-org-4.4]name&#x3D;MongoDB Repositorybaseurl&#x3D;https:&#x2F;&#x2F;repo.mongodb.org&#x2F;yum&#x2F;redhat&#x2F;$releasever&#x2F;mongodb-org&#x2F;4.4&#x2F;x86_64&#x2F;gpgchec">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-08-09T06:39:39.000Z">
-<meta property="article:modified_time" content="2020-09-24T05:52:40.988Z">
+<meta property="article:modified_time" content="2020-09-24T06:14:47.238Z">
 <meta property="article:author" content="guaik">
 <meta property="article:tag" content="mongodb">
 <meta name="twitter:card" content="summary">
@@ -265,12 +265,12 @@
 <ul>
 <li>初始化副本集</li>
 </ul>
-<p><code>rs.initiate(config)；</code></p>
+<p><code>rs.initiate(config);</code></p>
 <ul>
 <li>查看创建状态</li>
 </ul>
 <p><code>rs.status()</code></p>
-<h3 id="配置admin用户"><a href="#配置admin用户" class="headerlink" title="配置admin用户"></a>配置admin用户</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db.createUser(&#123;</span><br><span class="line">    user:<span class="string">"admin"</span>,</span><br><span class="line">    <span class="built_in">pwd</span>:<span class="string">"admin"</span>,</span><br><span class="line">    roles:[&#123;role:<span class="string">"root"</span>,db:<span class="string">"admin"</span>&#125;]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="配置admin用户"><a href="#配置admin用户" class="headerlink" title="配置admin用户"></a>配置admin用户</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">use admin;</span><br><span class="line">db.createUser(&#123;</span><br><span class="line">    user:<span class="string">"admin"</span>,</span><br><span class="line">    <span class="built_in">pwd</span>:<span class="string">"admin"</span>,</span><br><span class="line">    roles:[&#123;role:<span class="string">"root"</span>,db:<span class="string">"admin"</span>&#125;]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
 <h3 id="切换admin数据库并登陆"><a href="#切换admin数据库并登陆" class="headerlink" title="切换admin数据库并登陆"></a>切换admin数据库并登陆</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use admin;</span><br><span class="line">db.auth(<span class="string">"admin"</span>, <span class="string">"admin"</span>);</span><br></pre></td></tr></table></figure>
 
@@ -287,7 +287,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2020-09-24T05:52:40.988Z" itemprop="dateUpdated">2020-09-24 13:52:40</time>
+    Last updated: <time datetime="2020-09-24T06:14:47.238Z" itemprop="dateUpdated">2020-09-24 14:14:47</time>
 </span><br>
 
 
