@@ -14,7 +14,7 @@
     
     
     
-    <title>Flutter使用SharedPreferences：单例+同步 | 怪客的Blog | 分享一些黑科技</title>
+    <title>Flutter使用SharedPreferences：单例+同步 | Rick&#39;s blog | 分享一些黑科技</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -25,19 +25,19 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Flutter使用SharedPreferences：单例+同步">
 <meta property="og:url" content="https://guaik.github.io/2020/05/23/Flutter%E4%BD%BF%E7%94%A8SharedPreferences%EF%BC%9A%E5%8D%95%E4%BE%8B+%E5%90%8C%E6%AD%A5/index.html">
-<meta property="og:site_name" content="怪客的Blog">
+<meta property="og:site_name" content="Rick&#39;s blog">
 <meta property="og:description" content="Flutter如何本地存储K&#x2F;V数据呢？SharedPreferences是个不错的选择，当然几乎所有嵌入式系统都支持SQLite，你乐意就好。 安装SharedPreferences 在pubspec.yaml中添加依赖项  12dependencies:    shared_preferences: ^0.5.7+3   安装依赖项flutter pub get  SharedPreferen">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-05-23T13:38:32.000Z">
 <meta property="article:modified_time" content="2020-06-19T07:48:52.506Z">
-<meta property="article:author" content="guaik">
+<meta property="article:author" content="Rick">
 <meta property="article:tag" content="flutter">
 <meta property="article:tag" content="SharedPreferences">
 <meta property="article:tag" content="单例模式">
 <meta property="article:tag" content="同步">
 <meta name="twitter:card" content="summary">
     
-        <link rel="alternate" type="application/atom+xml" title="怪客的Blog" href="/atom.xml">
+        <link rel="alternate" type="application/atom+xml" title="Rick&#39;s blog" href="/atom.xml">
     
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
@@ -59,10 +59,10 @@
     <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
       <div class="brand">
         <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="/img/avatar.jpg">
+          <img src="/img/avatar.jpeg">
         </a>
         <hgroup class="introduce">
-          <h5 class="nickname">guaik</h5>
+          <h5 class="nickname">Rick</h5>
           <a href="mailto:luting.gu@gmail.com" title="luting.gu@gmail.com" class="mail">luting.gu@gmail.com</a>
         </hgroup>
       </div>
@@ -246,8 +246,8 @@
     
     <footer>
         <a href="https://guaik.github.io">
-            <img src="/img/avatar.jpg" alt="guaik">
-            guaik
+            <img src="/img/avatar.jpeg" alt="Rick">
+            Rick
         </a>
     </footer>
 </blockquote>
@@ -271,7 +271,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://guaik.github.io/2020/05/23/Flutter%E4%BD%BF%E7%94%A8SharedPreferences%EF%BC%9A%E5%8D%95%E4%BE%8B+%E5%90%8C%E6%AD%A5/&title=《Flutter使用SharedPreferences：单例+同步》 — 怪客的Blog&pic=https://guaik.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://guaik.github.io/2020/05/23/Flutter%E4%BD%BF%E7%94%A8SharedPreferences%EF%BC%9A%E5%8D%95%E4%BE%8B+%E5%90%8C%E6%AD%A5/&title=《Flutter使用SharedPreferences：单例+同步》 — Rick's blog&pic=https://guaik.github.io/img/avatar.jpeg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -281,7 +281,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://guaik.github.io/2020/05/23/Flutter%E4%BD%BF%E7%94%A8SharedPreferences%EF%BC%9A%E5%8D%95%E4%BE%8B+%E5%90%8C%E6%AD%A5/&title=《Flutter使用SharedPreferences：单例+同步》 — 怪客的Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://guaik.github.io/2020/05/23/Flutter%E4%BD%BF%E7%94%A8SharedPreferences%EF%BC%9A%E5%8D%95%E4%BE%8B+%E5%90%8C%E6%AD%A5/&title=《Flutter使用SharedPreferences：单例+同步》 — Rick's blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -291,7 +291,7 @@
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Flutter使用SharedPreferences：单例+同步》 — 怪客的Blog&url=https://guaik.github.io/2020/05/23/Flutter%E4%BD%BF%E7%94%A8SharedPreferences%EF%BC%9A%E5%8D%95%E4%BE%8B+%E5%90%8C%E6%AD%A5/&via=https://guaik.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Flutter使用SharedPreferences：单例+同步》 — Rick's blog&url=https://guaik.github.io/2020/05/23/Flutter%E4%BD%BF%E7%94%A8SharedPreferences%EF%BC%9A%E5%8D%95%E4%BE%8B+%E5%90%8C%E6%AD%A5/&via=https://guaik.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
@@ -421,7 +421,7 @@
         </p>
     </div>
     <div class="bottom">
-        <p><span>guaik &copy; 2020</span>
+        <p><span>Rick &copy; 2020</span>
             <span>
                 
                 Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
@@ -439,7 +439,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://guaik.github.io/2020/05/23/Flutter%E4%BD%BF%E7%94%A8SharedPreferences%EF%BC%9A%E5%8D%95%E4%BE%8B+%E5%90%8C%E6%AD%A5/&title=《Flutter使用SharedPreferences：单例+同步》 — 怪客的Blog&pic=https://guaik.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://guaik.github.io/2020/05/23/Flutter%E4%BD%BF%E7%94%A8SharedPreferences%EF%BC%9A%E5%8D%95%E4%BE%8B+%E5%90%8C%E6%AD%A5/&title=《Flutter使用SharedPreferences：单例+同步》 — Rick's blog&pic=https://guaik.github.io/img/avatar.jpeg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -449,7 +449,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://guaik.github.io/2020/05/23/Flutter%E4%BD%BF%E7%94%A8SharedPreferences%EF%BC%9A%E5%8D%95%E4%BE%8B+%E5%90%8C%E6%AD%A5/&title=《Flutter使用SharedPreferences：单例+同步》 — 怪客的Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://guaik.github.io/2020/05/23/Flutter%E4%BD%BF%E7%94%A8SharedPreferences%EF%BC%9A%E5%8D%95%E4%BE%8B+%E5%90%8C%E6%AD%A5/&title=《Flutter使用SharedPreferences：单例+同步》 — Rick's blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -459,7 +459,7 @@
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Flutter使用SharedPreferences：单例+同步》 — 怪客的Blog&url=https://guaik.github.io/2020/05/23/Flutter%E4%BD%BF%E7%94%A8SharedPreferences%EF%BC%9A%E5%8D%95%E4%BE%8B+%E5%90%8C%E6%AD%A5/&via=https://guaik.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Flutter使用SharedPreferences：单例+同步》 — Rick's blog&url=https://guaik.github.io/2020/05/23/Flutter%E4%BD%BF%E7%94%A8SharedPreferences%EF%BC%9A%E5%8D%95%E4%BE%8B+%E5%90%8C%E6%AD%A5/&via=https://guaik.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
